@@ -19,6 +19,7 @@ class RegisterRequest extends FormRequest
             'email'     => ["required", "email", "unique:users,email"],
             'phone'     => ["required", "digits:10"],
             'birthdate' => ["nullable", "date"],
+            'referer_user_id' => ['nullable', 'exists:users,id'],
             'password'  => ["required", "min:8", "confirmed"],
         ];
     }

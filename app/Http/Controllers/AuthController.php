@@ -12,8 +12,15 @@ use App\Http\Requests\Auth\RegisterRequest;
 
 class AuthController extends Controller
 {
-    public function viewRegister() {
-        return view('auth.register');
+    public function viewRegister(Request $request) {
+        $referer_user = null;
+        if($request->ref) {
+            $ref = base64_decode($request->ref);
+            $referer_user = User::find($ref);
+            $referer_user?->increment('referral_views');
+        }
+
+        return view('auth.register')->with( compact('referer_user') );
     } 
 
 
@@ -28,7 +35,7 @@ class AuthController extends Controller
 
         $user_role = Role::whereRole("user")->first();
         $user = $user_role->users()->create(
-            $request->only('name', 'email', 'phone', 'birthdate', 'password')
+            $request->only('name', 'email', 'phone', 'birthdate', 'referer_user_id', 'password')
             +
             ["image" => $image]
         );

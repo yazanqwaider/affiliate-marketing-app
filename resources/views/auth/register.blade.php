@@ -48,6 +48,7 @@
                 <label for="password_confirmation">Confirm Password *</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" placeholder="confirm password" required>
             </div>
+            <input type="hidden" name="referer_user_id" value="{{ $referer_user?->id }}">
 
             <button>register</button>
         </form>

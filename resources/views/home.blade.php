@@ -7,6 +7,6 @@
     </head>
 
     <body>
-       
+       <a href="{{ Auth::user()->referral_link }}">referral link</a>
     </body>
 </html>

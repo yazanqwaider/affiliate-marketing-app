@@ -37,6 +37,10 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
+    public function getReferralLinkAttribute() {
+        return route('auth.register', ['ref' => base64_encode($this->id)]);
+    }
+
     /** Relationships */
     public function role() {
         return $this->belongsTo(Role::class, 'role_id');
