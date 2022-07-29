@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function role() {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public function categories() {
+        return $this->hasMany(Category::class, 'user_id');
+    }
 }

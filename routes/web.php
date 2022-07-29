@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,9 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    Route::resource('categories', CategoryController::class);
 });
+
 
 Route::middleware('guest')->as('auth.')->group(function() {
     Route::view('/login', "auth.login")->name('login');

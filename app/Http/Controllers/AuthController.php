@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Database\Seeders\CategorySeeder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 
@@ -28,19 +33,32 @@ class AuthController extends Controller
      * @param RegisterRequest $request
      */
     public function register(RegisterRequest $request) {
+        $user_role = Role::whereRole("user")->first();
+
         $image = null;
         if($request->hasFile('image')) {
             $image = $request->file('image')->store('users');
         }
 
-        $user_role = Role::whereRole("user")->first();
-        $user = $user_role->users()->create(
-            $request->only('name', 'email', 'phone', 'birthdate', 'referer_user_id', 'password')
-            +
-            ["image" => $image]
-        );
+        DB::beginTransaction();
+        try {
+            $user = $user_role->users()->create(
+                $request->only('name', 'email', 'phone', 'birthdate', 'referer_user_id', 'password')
+                +
+                ["image" => $image]
+            );
+            $categorySeeder = new CategorySeeder($user);
+            $categorySeeder->run();
 
-        Auth::loginUsingId($user->id);
+            Auth::loginUsingId($user->id);
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollback();
+            Storage::delete($image);
+            Log::error($exception);
+            return redirect()->back()->with(['messageStatus' => 'danger', 'message' => 'Opps, There are errors !']);
+        }
+      
         return redirect()->route('home');
     }
 
