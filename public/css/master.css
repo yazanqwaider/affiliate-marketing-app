@@ -1,0 +1,6 @@
+nav .user-img {
+    width: 42px;
+    border: 1px solid #afafaf;
+    border-radius: 50%;
+    overflow: hidden;
+}

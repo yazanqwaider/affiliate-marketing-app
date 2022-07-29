@@ -47,6 +47,8 @@ class AuthController extends Controller
                 +
                 ["image" => $image]
             );
+            $user->referer_user?->increment('referral_registrations');
+
             $categorySeeder = new CategorySeeder($user);
             $categorySeeder->run();
 

@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->date('birthdate')->nullable();
             $table->string('image');
             $table->bigInteger('referral_views')->default(0);
+            $table->bigInteger('referral_registrations')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
