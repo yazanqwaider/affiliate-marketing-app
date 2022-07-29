@@ -7,6 +7,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/master.css') }}">
+        @stack('style')
     </head>
 
     <body>

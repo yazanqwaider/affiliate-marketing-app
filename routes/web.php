@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +27,9 @@ Route::middleware('auth')->group(function() {
 
     Route::resource('transactions', TransactionController::class);
 
+    Route::middleware('admin')->group(function() {
+        Route::get('dashboard', [DashboardHomeController::class, 'index'])->name('dashboard.home');
+    });
 });
 
 
@@ -36,5 +39,4 @@ Route::middleware('guest')->as('auth.')->group(function() {
 
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
-
 });

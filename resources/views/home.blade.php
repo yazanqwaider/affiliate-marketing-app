@@ -3,24 +3,37 @@
 @section('content')
     <div>
       <section>
-        <div class="d-flex justify-content-between">
-          <div class="col-9 d-flex justify-content-around my-3">
-            <div class="total-item" title="registered users through the user referral link">
-                <h4>Referral Registrations</h4>
-                <h3>{{ Auth::user()->referral_registrations }}</h3>
-            </div>
-  
-            <div class="total-item" title="visitors that view the user registration page">
-                <h4>Referral Views</h4>
-                <h3>{{ Auth::user()->referral_views }}</h3>
-            </div>
+        <div>
+          <p class="m-1">Go to <a href="{{ $user->referral_link }}" target="_blank">referral link</a></p>
+          <button class="btn btn-outline-info btn-sm copy-link-btn" data-link="{{ $user->referral_link }}">copy link</button>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-around my-3">
+          <div class="total-item" title="registered users through the user referral link">
+              <h4>Referral Registrations</h4>
+              <h3>{{ $user->referral_registrations }}</h3>
           </div>
-  
-          <div>
-            <p>Go to <a href="{{ Auth::user()->referral_link }}" target="_blank">referral link</a></p>
-            <button class="btn btn-outline-info btn-sm copy-link-btn" data-link="{{ Auth::user()->referral_link }}">copy link</button>
+
+          <div class="total-item" title="visitors that view the user registration page">
+              <h4>Referral Views</h4>
+              <h3>{{ $user->referral_views }}</h3>
           </div>
-        </div>  
+
+          <div class="total-item" title="wallet balance">
+              <h4>Wallet Balance</h4>
+              <h3>{{ $user->balance }}</h3>
+          </div>
+          
+          <div class="total-item" title="wallet balance">
+              <h4>Total Expenses</h4>
+              <h3>{{ $user->expenses_transactions->sum('amount') }}</h3>
+          </div>
+          
+          <div class="total-item" title="wallet balance">
+              <h4>Total Income</h4>
+              <h3>{{ $user->income_transactions->sum('amount') }}</h3>
+          </div>
+        </div>
       </section>
   
       <section class="my-3">
@@ -35,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse (Auth::user()->referred_users as $referred_user)
+                    @forelse ($user->referred_users as $referred_user)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $referred_user->name }}</td>

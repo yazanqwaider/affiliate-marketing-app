@@ -11,8 +11,8 @@ class RoleSeeder extends Seeder
     
     public function __construct() {
         $this->roles = [
-            ["role" => "user"],
-            ["role" => "admin"]
+            ["name" => "user"],
+            ["name" => "admin"]
         ];
     }
     

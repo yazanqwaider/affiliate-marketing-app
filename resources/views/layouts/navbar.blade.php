@@ -6,13 +6,19 @@
 
     <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarScroll">
         <ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
-          <li class="nav-item active">
+          <li class="nav-item {{ (Route::is('home'))? 'active':'' }}">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
 
-          <li class="nav-item active">
+          <li class="nav-item {{ (Route::is('categories.index'))? 'active':'' }}">
             <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
           </li>
+
+          @if (Cache::get('role_name') == 'admin')
+            <li class="nav-item {{ (Route::is('dashboard.home'))? 'active':'' }}">
+              <a class="nav-link" href="{{ route('dashboard.home') }}">Dashboard</a>
+            </li>
+          @endif
         </ul>
         
         <ul class="my-0 mr-3">

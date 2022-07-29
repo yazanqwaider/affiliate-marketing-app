@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Database\Seeders\CategorySeeder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -53,6 +54,7 @@ class AuthController extends Controller
             $categorySeeder->run();
 
             Auth::loginUsingId($user->id);
+            Cache::set('role_name', $user->role->name);
             DB::commit();
         } catch (Exception $exception) {
             DB::rollback();
@@ -74,6 +76,7 @@ class AuthController extends Controller
 
         if($user && Hash::check($request->password, $user->password)){
             Auth::loginUsingId($user->id);
+            Cache::set('role_name', $user->role->name);
             return redirect()->route('home');
         }
 
@@ -82,6 +85,7 @@ class AuthController extends Controller
 
     public function logout() {
         Auth::logout();
+        Cache::forget('role_name');
         return redirect()->route('home');
     }
 }

@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function getReferralLinkAttribute() {
         return route('auth.register', ['ref' => base64_encode($this->id)]);
-    }
+    }    
 
     /** Relationships */
     public function role() {
@@ -60,5 +60,13 @@ class User extends Authenticatable
 
     public function transactions() {
         return $this->hasMany(Transaction::class, 'user_id');
+    }
+
+    public function expenses_transactions() {
+        return $this->hasManyThrough(Transaction::class, Category::class, 'user_id', 'category_id')->where('type', 'expenses');
+    }
+
+    public function income_transactions() {
+        return $this->hasManyThrough(Transaction::class, Category::class, 'user_id', 'category_id')->where('type', 'income');
     }
 }

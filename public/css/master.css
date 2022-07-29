@@ -10,7 +10,8 @@ nav .user-img {
     padding: 13px;
     text-align: center;
     box-shadow: 3px 3px 10px #f7f7f7;
-    width: 40%;
+    width: 32%;
+    margin: 5px;
     cursor: help;
     transition: 0.3s;
 }

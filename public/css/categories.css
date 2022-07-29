@@ -1,0 +1,17 @@
+.category-type {
+    color: white;
+    border-radius: 23px;
+    padding: 3px 0px;
+    width: 83px;
+    display: inline-block;
+    text-align: center;
+    font-size: 15px;
+}
+
+.income-item {
+    background: green;
+}
+
+.expenses-item {
+    background: red;
+}

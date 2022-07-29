@@ -11,6 +11,8 @@ class Transaction extends Model
 
     public $guarded = [];
 
+    public $with = ['category'];
+
     /** Accessors And Mutators */
     public function getAmountWithSignAttribute() {
         $category_type = $this->category->type;

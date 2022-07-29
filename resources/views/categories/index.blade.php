@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@push('style')
+    <link rel="stylesheet" href="{{ asset('css/categories.css') }}">    
+@endpush
+
 @section('content')
     <div>
 
@@ -26,7 +30,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
-                        <td>{{ $category->type }}</td>
+                        <td><span class="category-type {{ $category->type }}-item">{{ $category->type }}</span></td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit{{$category->id}}Modal">
                                 Edit
