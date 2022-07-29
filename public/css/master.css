@@ -4,3 +4,18 @@ nav .user-img {
     border-radius: 50%;
     overflow: hidden;
 }
+
+.total-item {
+    border: 1px solid whitesmoke;
+    padding: 13px;
+    text-align: center;
+    box-shadow: 3px 3px 10px #f7f7f7;
+    width: 40%;
+    cursor: help;
+    transition: 0.3s;
+}
+
+.total-item:hover {
+    box-shadow: 2px 2px 13px #efefef;
+    transform: scale(1.03);
+}

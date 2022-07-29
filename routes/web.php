@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,9 @@ Route::middleware('auth')->group(function() {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::resource('categories', CategoryController::class);
+
+    Route::resource('transactions', TransactionController::class);
+
 });
 
 

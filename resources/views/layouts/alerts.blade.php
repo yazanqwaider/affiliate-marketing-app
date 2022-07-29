@@ -5,3 +5,9 @@
         </div>
     @endforeach
 @endif
+
+@if (session()->has('messageStatus'))
+    <div class="alert alert-{{ session('messageStatus') }}">
+        {{ session('message') }}
+    </div>
+@endif

@@ -11,6 +11,12 @@ class Transaction extends Model
 
     public $guarded = [];
 
+    /** Accessors And Mutators */
+    public function getAmountWithSignAttribute() {
+        $category_type = $this->category->type;
+        return ($category_type == 'income')? abs($this->amount) : -1 * abs($this->amount);
+    }
+
     /** Relationships */
     public function user() {
         return $this->belongsTo(User::class, 'user_id');

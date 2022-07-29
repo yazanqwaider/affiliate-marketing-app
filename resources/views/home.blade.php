@@ -2,28 +2,36 @@
 
 @section('content')
     <div>
-        <a href="{{ Auth::user()->referral_link }}">referral link</a>
-
-        <div>
-            <div>
+      <section>
+        <div class="d-flex justify-content-between">
+          <div class="col-9 d-flex justify-content-around my-3">
+            <div class="total-item" title="registered users through the user referral link">
                 <h4>Referral Registrations</h4>
                 <h3>{{ Auth::user()->referral_registrations }}</h3>
             </div>
-
-            <div>
+  
+            <div class="total-item" title="visitors that view the user registration page">
                 <h4>Referral Views</h4>
                 <h3>{{ Auth::user()->referral_views }}</h3>
             </div>
-        </div>
-
-        <h2>Referred Users</h2>
+          </div>
+  
+          <div>
+            <p>Go to <a href="{{ Auth::user()->referral_link }}" target="_blank">referral link</a></p>
+            <button class="btn btn-outline-info btn-sm copy-link-btn" data-link="{{ Auth::user()->referral_link }}">copy link</button>
+          </div>
+        </div>  
+      </section>
+  
+      <section class="my-3">
+        <h3>Referred Users</h3>
         <div class="table-responsive">
-            <table class="table table-striped table-sm">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Crreate At</th>
+                        <th>Created At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,46 +49,69 @@
                 </tbody>
             </table>
         </div>
+      </section>
 
+      <section class="my-3">
+        <h3>Transactions</h3>
 
+        @include('transactions.index')
+      </section>
+
+      <section class="my-3">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Dashboard</h1>
-            <p class="text-secondary mb-2 mb-md-0">Last 14 days (about two weeks)</p>
-          </div>
+          <h3>Statistics</h3>
+          <p class="text-secondary mb-2 mb-md-0">Last 14 days (about two weeks)</p>
+        </div>
 
-          <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
-          
-
-          <!-- Graphs -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-          <script>
-            var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-              type: 'line',
-              data: {
-                labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                datasets: [{
-                  data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                  lineTension: 0,
-                  backgroundColor: 'transparent',
-                  borderColor: '#007bff',
-                  borderWidth: 4,
-                  pointBackgroundColor: '#007bff'
-                }]
-              },
-              options: {
-                scales: {
-                  yAxes: [{
-                    ticks: {
-                      beginAtZero: false
-                    }
-                  }]
-                },
-                legend: {
-                  display: false,
-                }
-              }
-            });
-          </script>      
+        <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
+      </section> 
     </div>
 @endsection
+
+@push('script')
+  <script src="{{ asset('js/chart.js') }}"></script>
+
+  <script>
+    var ctx = document.getElementById("myChart");
+    let labels = @json(array_keys($transactions));
+    let values = @json(array_values($transactions));
+
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Registered Users',
+          data: values,
+          lineTension: 0,
+          backgroundColor: 'transparent',
+          borderColor: '#007bff',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            ticks: {
+              stepSize: 1,
+              beginAtZero: false
+            }
+          }
+        },
+        legend: {
+          display: false,
+        }
+      }
+    });
+
+
+    $('.copy-link-btn').on('click', function() {
+      var tempInput = $("<input>");
+      $("body").append(tempInput);
+      tempInput.val($(this).attr('data-link')).select();
+      document.execCommand("copy");
+      tempInput.remove();
+    });
+  </script>
+@endpush
