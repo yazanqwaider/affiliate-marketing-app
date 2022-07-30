@@ -32,17 +32,6 @@ class CategoryController extends Controller
         return redirect()->back()->with(['messageClass' => 'success', 'message' => 'Created successfully .']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
 
     /**
      * Update the specified resource in storage.

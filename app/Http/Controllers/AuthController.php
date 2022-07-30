@@ -31,6 +31,8 @@ class AuthController extends Controller
 
 
     /**
+     * register new user, and signin after create
+     * 
      * @param RegisterRequest $request
      */
     public function register(RegisterRequest $request) {
@@ -68,6 +70,7 @@ class AuthController extends Controller
 
 
     /**
+     * signin exists user
      * 
      * @param LoginRequest $request
      */
@@ -83,6 +86,9 @@ class AuthController extends Controller
         return redirect()->back()->withInput()->withErrors(["Email or password is invalid !"]);
     }
 
+    /**
+     * logout the current user session
+     */
     public function logout() {
         Auth::logout();
         Cache::forget('role_name');
