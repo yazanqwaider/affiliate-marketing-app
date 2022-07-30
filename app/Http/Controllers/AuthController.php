@@ -34,7 +34,7 @@ class AuthController extends Controller
      * @param RegisterRequest $request
      */
     public function register(RegisterRequest $request) {
-        $user_role = Role::whereRole("user")->first();
+        $user_role = Role::whereName("user")->first();
 
         $image = null;
         if($request->hasFile('image')) {
@@ -63,7 +63,7 @@ class AuthController extends Controller
             return redirect()->back()->with(['messageStatus' => 'danger', 'message' => 'Opps, There are errors !']);
         }
       
-        return redirect()->route('home');
+        return redirect()->route('home')->with(['messageStatus' => 'success', 'message' => 'Welcome '.Auth::user()->name]);
     }
 
 
