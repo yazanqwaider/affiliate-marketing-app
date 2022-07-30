@@ -42,7 +42,6 @@ class CreateUserTest extends TestCase
 
     public function test_create_user_with_valid_fields()
     {
-        $this->withoutExceptionHandling();
         Storage::fake('public');
         
         $data = [
