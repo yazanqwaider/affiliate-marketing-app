@@ -40,3 +40,8 @@ php artisan migrate --seed
 you can get a tour with admin account :
 Email: admin@gmail.com
 Password: 123456789
+
+you can test features automatically through run this command :
+```
+php artisan test
+```
