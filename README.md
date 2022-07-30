@@ -35,3 +35,8 @@ then migrate tables and seed data by this command :
 ```
 php artisan migrate --seed
 ```
+
+
+you can get a tour with admin account :
+Email: admin@gmail.com
+Password: 123456789

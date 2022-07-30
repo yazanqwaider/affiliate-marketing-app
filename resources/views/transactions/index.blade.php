@@ -21,10 +21,8 @@
         </thead>
 
         <tbody>
-            @php $balance = 0; @endphp
+            @php $balance = Auth::user()->balance; @endphp
             @forelse (Auth::user()->transactions as $transaction)
-                @php $balance+= $transaction->amount_with_sign; @endphp
-
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $transaction->category->name }}</td>
@@ -38,6 +36,7 @@
                         </button>
                     </td>
                 </tr>
+                @php $balance-= $transaction->amount_with_sign; @endphp
 
                 @include('transactions.edit', ['transaction' => $transaction])
             @empty

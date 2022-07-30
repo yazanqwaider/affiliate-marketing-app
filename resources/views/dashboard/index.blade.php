@@ -12,7 +12,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Registered Date</th>
+                        <th width="200">Registered Date</th>
                         <th>Referred Users Count</th>
                         <th>Total Income</th>
                         <th>Total Expenses</th>
@@ -27,9 +27,9 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td>{{ $user->referral_registrations }}</td>
-                            <td>{{ $user->income_transactions->sum('amount') }}</td>
-                            <td>{{ $user->expenses_transactions->sum('amount') }}</td>
-                            <td>{{ $user->balance }}</td>
+                            <td class="font-weight-bold text-success">{{ $user->income_transactions->sum('amount') }}</td>
+                            <td class="font-weight-bold text-danger">{{ $user->expenses_transactions->sum('amount') }}</td>
+                            <td class="font-weight-bold">{{ $user->balance }}</td>
                         </tr>
                     @empty
                         <tr>
